@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 查询题目请求
@@ -29,7 +30,7 @@ public class QuestionQueryRequest extends PageRequest implements Serializable {
     /**
      * 标签列表（json 数组）
      */
-    private Object tags;
+    private List<String> tags;
 
     /**
      * 题目提交数

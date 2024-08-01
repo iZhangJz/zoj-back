@@ -3,6 +3,7 @@ package com.zjz.zoj.model.dto.question;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 创建题目请求
@@ -24,7 +25,7 @@ public class QuestionAddRequest implements Serializable {
     /**
      * 标签列表（json 数组）
      */
-    private Object tags;
+    private List<String> tags;
 
     /**
      * 题目答案
@@ -44,12 +45,12 @@ public class QuestionAddRequest implements Serializable {
     /**
      * 判题用例（json 数组）
      */
-    private String judgeCase;
+    private List<QuestionJudgeCase> judgeCase;
 
     /**
      * 判题配置（json 对象）
      */
-    private String judgeConfig;
+    private QuestionJudgeConfig judgeConfig;
 
     /**
      * 点赞数
