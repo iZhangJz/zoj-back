@@ -183,7 +183,7 @@ public class QuestionSubmitController {
      */
     @PostMapping("/list/page")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public BaseResponse<Page<QuestionSubmit>> listQuestionByPage(
+    public BaseResponse<Page<QuestionSubmit>> listQuestionSubmitByPage(
             @RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest) {
         return handleQuestionSubmitQuery(questionSubmitQueryRequest, null, true, false, page -> page);
     }
@@ -196,7 +196,7 @@ public class QuestionSubmitController {
      * @return
      */
     @PostMapping("/list/page/vo")
-    public BaseResponse<Page<QuestionSubmitVO>> listQuestionVOByPage(
+    public BaseResponse<Page<QuestionSubmitVO>> listQuestionSubmitVOByPage(
             @RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest, HttpServletRequest request) {
         return handleQuestionSubmitQuery(questionSubmitQueryRequest, request, false, false,
                 page -> questionSubmitService.getQuestionSubmitVOPage(page, request));
@@ -210,7 +210,7 @@ public class QuestionSubmitController {
      * @return
      */
     @PostMapping("/my/list/page/vo")
-    public BaseResponse<Page<QuestionSubmitVO>> listMyQuestionVOByPage(
+    public BaseResponse<Page<QuestionSubmitVO>> listMyQuestionSubmitVOByPage(
             @RequestBody QuestionSubmitQueryRequest questionSubmitQueryRequest, HttpServletRequest request) {
         return handleQuestionSubmitQuery(questionSubmitQueryRequest, request, false, true,
                 page -> questionSubmitService.getQuestionSubmitVOPage(page, request));
@@ -229,7 +229,6 @@ public class QuestionSubmitController {
         if (questionSubmitEditRequest == null || questionSubmitEditRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        // todo 在此处将实体类和 DTO 进行转换
         QuestionSubmit questionSubmit = new QuestionSubmit();
         BeanUtils.copyProperties(questionSubmitEditRequest, questionSubmit);
         // 数据校验

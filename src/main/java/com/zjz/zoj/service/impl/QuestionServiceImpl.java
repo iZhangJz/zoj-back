@@ -81,23 +81,23 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     /**
      * 获取查询条件
      *
-     * @param QuestionQueryRequest
+     * @param questionQueryRequest
      * @return
      */
     @Override
-    public QueryWrapper<Question> getQueryWrapper(QuestionQueryRequest QuestionQueryRequest) {
+    public QueryWrapper<Question> getQueryWrapper(QuestionQueryRequest questionQueryRequest) {
         QueryWrapper<Question> queryWrapper = new QueryWrapper<>();
-        if (QuestionQueryRequest == null) {
+        if (questionQueryRequest == null) {
             return queryWrapper;
         }
-        Long id = QuestionQueryRequest.getId();
-        Long notId = QuestionQueryRequest.getNotId();
-        String title = QuestionQueryRequest.getTitle();
-        String content = QuestionQueryRequest.getContent();
-        String searchText = QuestionQueryRequest.getSearchText();
-        String sortField = QuestionQueryRequest.getSortField();
-        String sortOrder = QuestionQueryRequest.getSortOrder();
-        Long userId = QuestionQueryRequest.getUserId();
+        Long id = questionQueryRequest.getId();
+        Long notId = questionQueryRequest.getNotId();
+        String title = questionQueryRequest.getTitle();
+        String content = questionQueryRequest.getContent();
+        String searchText = questionQueryRequest.getSearchText();
+        String sortField = questionQueryRequest.getSortField();
+        String sortOrder = questionQueryRequest.getSortOrder();
+        Long userId = questionQueryRequest.getUserId();
         // 从多字段中搜索
         if (StringUtils.isNotBlank(searchText)) {
             // 需要拼接查询条件

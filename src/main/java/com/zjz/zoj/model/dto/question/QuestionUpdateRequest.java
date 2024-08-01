@@ -31,12 +31,12 @@ public class QuestionUpdateRequest implements Serializable {
     /**
      * 标签列表（json 数组）
      */
-    private Object tags;
+    private List<String> tags;
 
     /**
      * 题目答案
      */
-    private List<String> answer;
+    private String answer;
 
     /**
      * 题目提交数
@@ -67,11 +67,6 @@ public class QuestionUpdateRequest implements Serializable {
      * 收藏数
      */
     private Integer favourNum;
-
-    /**
-     * 创建用户 id
-     */
-    private Long userId;
 
     /**
      * 创建时间
