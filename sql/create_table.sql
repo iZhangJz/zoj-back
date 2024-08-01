@@ -42,7 +42,8 @@ create table if not exists question
     updateTime datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
     isDelete   tinyint  default 0                 not null comment '是否删除',
     index idx_userId (userId),
-    index idx_title (title)
+    index idx_title (title),
+    constraint fk_question_userId foreign key (userId) references user(id) on delete cascade on update cascade -- 假设 users 表存在
 ) comment '题目' collate = utf8mb4_unicode_ci;
 
 -- 题目提交表
@@ -59,5 +60,7 @@ create table if not exists question_submit
     updateTime datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
     isDelete   tinyint  default 0                 not null comment '是否删除',
     index idx_questionId (questionId),
-    index idx_userId (userId)
+    index idx_userId (userId),
+    constraint fk_questionSubmit_questionId foreign key (questionId) references question(id) on delete cascade on update cascade,
+    constraint fk_questionSubmit_userId foreign key (userId) references user(id) on delete cascade on update cascade -- 假设 users 表存在
 ) comment '题目提交';
