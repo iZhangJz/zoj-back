@@ -114,6 +114,8 @@ public class QuestionController {
             return ((QuestionAddRequest) request).getTags();
         } else if (request instanceof QuestionUpdateRequest) {
             return ((QuestionUpdateRequest) request).getTags();
+        } else if (request instanceof QuestionEditRequest){
+            return ((QuestionEditRequest) request).getTags();
         }
         return null;
     }
@@ -128,6 +130,8 @@ public class QuestionController {
             return ((QuestionAddRequest) request).getJudgeCase();
         } else if (request instanceof QuestionUpdateRequest) {
             return ((QuestionUpdateRequest) request).getJudgeCase();
+        } else if (request instanceof QuestionEditRequest){
+            return ((QuestionEditRequest) request).getJudgeCase();
         }
         return null;
     }
@@ -142,6 +146,8 @@ public class QuestionController {
             return ((QuestionAddRequest) request).getJudgeConfig();
         } else if (request instanceof QuestionUpdateRequest) {
             return ((QuestionUpdateRequest) request).getJudgeConfig();
+        } else if (request instanceof QuestionEditRequest){
+            return ((QuestionEditRequest) request).getJudgeConfig();
         }
         return null;
     }
@@ -303,6 +309,8 @@ public class QuestionController {
         }
         Question question = new Question();
         BeanUtils.copyProperties(questionEditRequest, question);
+        setQuestionProperty(question,questionEditRequest);
+
         // 数据校验
         questionService.validQuestion(question, false);
         User loginUser = userService.getLoginUser(request);

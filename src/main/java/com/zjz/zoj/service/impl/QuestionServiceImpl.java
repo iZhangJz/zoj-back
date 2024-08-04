@@ -120,18 +120,22 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     /**
      * 获取题目封装
      *
-     * @param Question
+     * @param question
      * @param request
      * @return
      */
     @Override
-    public QuestionVO getQuestionVO(Question Question, HttpServletRequest request) {
-        // 对象转封装类
-        QuestionVO questionVO = QuestionVO.objToVo(Question);
+    public QuestionVO getQuestionVO(Question question, HttpServletRequest request) {
 
+        // 对象转封装类
+        QuestionVO questionVO = QuestionVO.objToVo(question);
+        if (!userService.isAdmin(request)) {
+            // 如果不是管理员，手动设置敏感信息不可见
+            questionVO.setAnswer(null);
+        }
         // region 可选
         // 关联查询用户信息
-        Long userId = Question.getUserId();
+        Long userId = question.getUserId();
         User user = null;
         if (userId != null && userId > 0) {
             user = userService.getById(userId);
