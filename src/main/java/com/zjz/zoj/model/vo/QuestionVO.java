@@ -88,11 +88,6 @@ public class QuestionVO implements Serializable {
     private Date updateTime;
 
     /**
-     * 创建用户信息
-     */
-    private UserVO user;
-
-    /**
      * 封装类转对象
      *
      * @param QuestionVO

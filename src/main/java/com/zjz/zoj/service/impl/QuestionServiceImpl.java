@@ -10,9 +10,7 @@ import com.zjz.zoj.exception.ThrowUtils;
 import com.zjz.zoj.mapper.QuestionMapper;
 import com.zjz.zoj.model.dto.question.QuestionQueryRequest;
 import com.zjz.zoj.model.entity.Question;
-import com.zjz.zoj.model.entity.User;
 import com.zjz.zoj.model.vo.QuestionVO;
-import com.zjz.zoj.model.vo.UserVO;
 import com.zjz.zoj.service.QuestionService;
 import com.zjz.zoj.service.UserService;
 import com.zjz.zoj.utils.SqlUtils;
@@ -98,10 +96,17 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         String sortField = questionQueryRequest.getSortField();
         String sortOrder = questionQueryRequest.getSortOrder();
         Long userId = questionQueryRequest.getUserId();
+        List<String> tags = questionQueryRequest.getTags();
         // 从多字段中搜索
         if (StringUtils.isNotBlank(searchText)) {
             // 需要拼接查询条件
             queryWrapper.and(qw -> qw.like("title", searchText).or().like("content", searchText));
+        }
+        // 根据 tags 进行查询
+        if (tags != null && !tags.isEmpty()) {
+            for (String tag : tags) {
+                queryWrapper.apply("JSON_CONTAINS(tags, {0})", "\"" + tag + "\"");
+            }
         }
         // 模糊查询
         queryWrapper.like(StringUtils.isNotBlank(title), "title", title);
@@ -133,17 +138,6 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
             // 如果不是管理员，手动设置敏感信息不可见
             questionVO.setAnswer(null);
         }
-        // region 可选
-        // 关联查询用户信息
-        Long userId = question.getUserId();
-        User user = null;
-        if (userId != null && userId > 0) {
-            user = userService.getById(userId);
-        }
-        UserVO userVO = userService.getUserVO(user);
-        questionVO.setUser(userVO);
-        // endregion
-
         return questionVO;
     }
 
@@ -164,21 +158,11 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
         // 对象列表 => 封装对象列表
         List<QuestionVO> QuestionVOList = QuestionList.stream().map(QuestionVO::objToVo).collect(Collectors.toList());
 
-        // region 可选
-        // 关联查询用户信息
-        Set<Long> userIdSet = QuestionList.stream().map(Question::getUserId).collect(Collectors.toSet());
-        Map<Long, List<User>> userIdUserListMap = userService.listByIds(userIdSet).stream()
-                .collect(Collectors.groupingBy(User::getId));
-        // 填充信息
-        QuestionVOList.forEach(QuestionVO -> {
-            Long userId = QuestionVO.getUserId();
-            User user = null;
-            if (userIdUserListMap.containsKey(userId)) {
-                user = userIdUserListMap.get(userId).get(0);
-            }
-            QuestionVO.setUser(userService.getUserVO(user));
-        });
-        // endregion
+        // 设置脱敏
+//        if (!userService.isAdmin(request)) {
+//            // 如果不是管理员，手动设置敏感信息不可见
+//            QuestionVOList.forEach(questionVO -> questionVO.setAnswer(null));
+//        }
 
         QuestionVOPage.setRecords(QuestionVOList);
         return QuestionVOPage;

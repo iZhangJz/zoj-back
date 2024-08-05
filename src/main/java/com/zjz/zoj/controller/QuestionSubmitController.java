@@ -87,7 +87,8 @@ public class QuestionSubmitController {
      * @return
      */
     @PostMapping("/add")
-    public BaseResponse<Long> addQuestionSubmit(@RequestBody QuestionSubmitAddRequest questionSubmitAddRequest, HttpServletRequest request) {
+    public BaseResponse<Long> addQuestionSubmit(
+            @RequestBody QuestionSubmitAddRequest questionSubmitAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(questionSubmitAddRequest == null, ErrorCode.PARAMS_ERROR);
         QuestionSubmit questionSubmit = new QuestionSubmit();
         BeanUtils.copyProperties(questionSubmitAddRequest, questionSubmit);

@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
  */
 public enum LanguageEnum {
 
-    JAVA("Java", "Java"),
-    C_PLUS_PLUS("C++", "C++"),
-    GO_LANG("Golang", "Golang");
+    JAVA("Java", "java"),
+    C_PLUS_PLUS("C++", "cpp"),
+    GO_LANG("Golang", "go");
 
     private final String text;
 
