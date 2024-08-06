@@ -9,13 +9,16 @@ import com.zjz.zoj.common.ResultUtils;
 import com.zjz.zoj.constant.UserConstant;
 import com.zjz.zoj.exception.BusinessException;
 import com.zjz.zoj.exception.ThrowUtils;
+import com.zjz.zoj.model.dto.judge.JudgeResultResponse;
 import com.zjz.zoj.model.dto.submit.QuestionSubmitAddRequest;
 import com.zjz.zoj.model.dto.submit.QuestionSubmitEditRequest;
 import com.zjz.zoj.model.dto.submit.QuestionSubmitQueryRequest;
 import com.zjz.zoj.model.dto.submit.QuestionSubmitUpdateRequest;
 import com.zjz.zoj.model.entity.QuestionSubmit;
 import com.zjz.zoj.model.entity.User;
+import com.zjz.zoj.model.enums.JudgeStatusEnum;
 import com.zjz.zoj.model.vo.QuestionSubmitVO;
+import com.zjz.zoj.service.JudgeService;
 import com.zjz.zoj.service.QuestionService;
 import com.zjz.zoj.service.QuestionSubmitService;
 import com.zjz.zoj.service.UserService;
@@ -44,6 +47,9 @@ public class QuestionSubmitController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private JudgeService judgeService;
 
 
     // 公共的分页和查询逻辑
@@ -87,7 +93,7 @@ public class QuestionSubmitController {
      * @return
      */
     @PostMapping("/add")
-    public BaseResponse<Long> addQuestionSubmit(
+    public BaseResponse<JudgeResultResponse> addQuestionSubmit(
             @RequestBody QuestionSubmitAddRequest questionSubmitAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(questionSubmitAddRequest == null, ErrorCode.PARAMS_ERROR);
         QuestionSubmit questionSubmit = new QuestionSubmit();
@@ -96,14 +102,17 @@ public class QuestionSubmitController {
         questionSubmitService.validQuestionSubmit(questionSubmit, true);
         User loginUser = userService.getLoginUser(request);
         questionSubmit.setUserId(loginUser.getId());
-        // 写入数据库
+        questionSubmit.setStatus(JudgeStatusEnum.WAIT.getValue());
+        // 写入数据库 默认的判题状态是“等待判题”
         boolean result = questionSubmitService.save(questionSubmit);
         ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
         // 将改题目的提交次数加一
         questionService.addSubmitCount(questionSubmit.getQuestionId());
+        // 写入数据库成功 开始判题
+        JudgeResultResponse response = judgeService.doJudge(questionSubmit);
         // 返回新写入的数据 id
-        long newQuestionSubmitId = questionSubmit.getId();
-        return ResultUtils.success(newQuestionSubmitId);
+        response.setId(questionSubmit.getId());
+        return ResultUtils.success(response);
     }
 
     /**

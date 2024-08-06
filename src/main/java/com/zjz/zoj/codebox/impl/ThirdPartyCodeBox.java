@@ -1,14 +1,19 @@
-package com.zjz.zoj.judge.impl;
+package com.zjz.zoj.codebox.impl;
 
-import com.zjz.zoj.judge.CodeBox;
-import com.zjz.zoj.judge.model.ExecuteRequest;
-import com.zjz.zoj.judge.model.ExecuteResponse;
+import com.zjz.zoj.annotation.CodeBoxLog;
+import com.zjz.zoj.codebox.CodeBox;
+import com.zjz.zoj.codebox.model.ExecuteRequest;
+import com.zjz.zoj.codebox.model.ExecuteResponse;
+import org.springframework.stereotype.Component;
 
 /**
  * 第三方代码沙箱 调用网上已经实现的代码沙箱
  */
+@Component
 public class ThirdPartyCodeBox implements CodeBox {
+
     @Override
+    @CodeBoxLog
     public ExecuteResponse executeCode(ExecuteRequest executeRequest) {
         // TODO 调用第三方代码沙箱
         System.out.println("调用第三方代码沙箱");

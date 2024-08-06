@@ -1,14 +1,19 @@
-package com.zjz.zoj.judge.impl;
+package com.zjz.zoj.codebox.impl;
 
-import com.zjz.zoj.judge.CodeBox;
-import com.zjz.zoj.judge.model.ExecuteRequest;
-import com.zjz.zoj.judge.model.ExecuteResponse;
+import com.zjz.zoj.annotation.CodeBoxLog;
+import com.zjz.zoj.codebox.CodeBox;
+import com.zjz.zoj.codebox.model.ExecuteRequest;
+import com.zjz.zoj.codebox.model.ExecuteResponse;
+import org.springframework.stereotype.Component;
 
 /**
  * 远程代码沙箱 调用已经实现的 OJ 系统
  */
+@Component
 public class RemoteCodeBox implements CodeBox {
+
     @Override
+    @CodeBoxLog
     public ExecuteResponse executeCode(ExecuteRequest executeRequest) {
         // TODO 远程代码沙箱 调用已经实现的 OJ 系统
         System.out.println("远程代码沙箱 调用已经实现的 OJ 系统");

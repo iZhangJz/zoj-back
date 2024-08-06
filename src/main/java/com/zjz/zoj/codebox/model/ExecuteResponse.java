@@ -1,6 +1,5 @@
-package com.zjz.zoj.judge.model;
+package com.zjz.zoj.codebox.model;
 
-import com.zjz.zoj.model.dto.question.QuestionJudgeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,7 +24,7 @@ public class ExecuteResponse {
     /**
      * 各个测试用例执行结果
      */
-    private List<QuestionJudgeInfo> judgeInfos;
+    private List<ExecuteInfo> executeInfos;
 
     /**
      * 接口信息

@@ -1,21 +1,22 @@
-package com.zjz.zoj.judge.enums;
+package com.zjz.zoj.codebox.enums;
 
 import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum CodeBoxTypeEnum {
+public enum CodeBoxStatusEnum {
 
-    SAMPLE("sample", "sample"),
-    REMOTE("remote", "remote"),
-    THIRD_PARTY("third_party", "third");
+    RUNNING("运行中", "running"),
+    ERROR("错误", "error"),
+    CRASH("宕机", "crash");
 
     private final String text;
 
     private final String value;
 
-    CodeBoxTypeEnum(String text, String value) {
+    CodeBoxStatusEnum(String text, String value) {
         this.text = text;
         this.value = value;
     }
@@ -32,11 +33,11 @@ public enum CodeBoxTypeEnum {
      * 根据 value 获取枚举
      *
      */
-    public static CodeBoxTypeEnum getEnumByValue(String value) {
+    public static CodeBoxStatusEnum getEnumByValue(String value) {
         if (ObjectUtils.isEmpty(value)) {
             return null;
         }
-        for (CodeBoxTypeEnum anEnum : CodeBoxTypeEnum.values()) {
+        for (CodeBoxStatusEnum anEnum : CodeBoxStatusEnum.values()) {
             if (anEnum.value.equals(value)) {
                 return anEnum;
             }
