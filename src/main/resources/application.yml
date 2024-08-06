@@ -99,3 +99,6 @@ knife4j:
         api-rule: package
         api-rule-resources:
           - com.zjz.zoj.controller
+# 代码沙箱配置 1.remote 2.third 3.sample
+codebox:
+  type: third
