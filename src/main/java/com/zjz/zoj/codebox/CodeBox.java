@@ -1,7 +1,7 @@
-package com.zjz.zoj.judge;
+package com.zjz.zoj.codebox;
 
-import com.zjz.zoj.judge.model.ExecuteRequest;
-import com.zjz.zoj.judge.model.ExecuteResponse;
+import com.zjz.zoj.codebox.model.ExecuteRequest;
+import com.zjz.zoj.codebox.model.ExecuteResponse;
 
 public interface CodeBox {
     /**

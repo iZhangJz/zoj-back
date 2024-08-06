@@ -1,4 +1,4 @@
-package com.zjz.zoj.judge.model;
+package com.zjz.zoj.codebox.model;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
