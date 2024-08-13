@@ -79,7 +79,7 @@ public class JudgeServiceImpl implements JudgeService {
         CodeBox codeBox = codeBoxFactory.getCodeBox(codeBoxProperties.getType());
         ExecuteResponse executeResponse = codeBox.executeCode(executeRequest);
         // 4.通过执行结果进行判题
-        if (Objects.equals(executeResponse.getMessage(), CodeBoxExecuteEnum.FAILED.getValue())){
+        if (Objects.equals(executeResponse.getStatus(), CodeBoxExecuteEnum.FAILED.getValue())){
             // 代码沙箱出现错误
             return JudgeResultResponse.builder()
                     .message(JudgeInfoEnum.SYSTEM_ERROR.getText())

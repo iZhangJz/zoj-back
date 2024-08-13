@@ -101,4 +101,7 @@ knife4j:
           - com.zjz.zoj.controller
 # 代码沙箱配置 1.remote 2.third 3.sample
 codebox:
-  type: third
+  type: remote
+  remote-url: http://localhost:8081/api/java/native
+  auth-header: auth
+  secret-key: secretKey

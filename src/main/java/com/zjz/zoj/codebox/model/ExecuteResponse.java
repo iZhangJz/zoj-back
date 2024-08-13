@@ -31,6 +31,11 @@ public class ExecuteResponse {
      */
     private String message;
 
+    /**
+     * 接口状态
+     */
+    private String status;
+
 
 
 }

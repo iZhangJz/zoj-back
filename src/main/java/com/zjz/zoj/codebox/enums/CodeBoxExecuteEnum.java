@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public enum CodeBoxExecuteEnum {
 
     SUCCESS("执行成功", "success"),
+    COMPILE_FAILED("编译失败", "compile_failed"),
     FAILED("执行失败", "failed");
 
     private final String text;
